@@ -9,5 +9,12 @@
     "cors": "^2.8.4",
     "querystring": "~0.2.0",
     "request": "~2.83.0"
+  },
+  "scripts": {
+    "start": "node authorization_code/app.js",
+    "dev": "nodemon authorization_code/app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
