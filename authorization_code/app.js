@@ -177,6 +177,10 @@ app.get('/refresh_token', function (req, res) {
   });
 });
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 const PORT = process.env.PORT || 8888;
 console.log(`Listening on ${PORT}`);
 app.listen(PORT);
