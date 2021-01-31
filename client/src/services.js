@@ -1,4 +1,5 @@
 getTokens();
+const PORT = process.env.PORT || 'http://localhost:8888';
 
 function getUser() {
   return getData('https://api.spotify.com/v1/me');
@@ -43,7 +44,7 @@ async function refresh(callback) {
   await getTokens();
   console.log('refreshing token:' + localStorage.getItem('refreshToken'));
   fetch(
-    'http://localhost:8888/refresh_token?refresh_token=' +
+    `${PORT}/refresh_token?refresh_token=` +
       localStorage.getItem('refreshToken')
   )
     .then(response => {
@@ -66,7 +67,7 @@ async function refresh(callback) {
 }
 
 async function getTokens() {
-  const response = await fetch('http://localhost:8888/tokens');
+  const response = await fetch(`${PORT}/tokens`);
   const tokens = await response.json();
   const prevAccessToken = localStorage.getItem('accessToken');
   const prevRefreshToken = localStorage.getItem('refreshToken');
@@ -74,7 +75,7 @@ async function getTokens() {
     tokens.refresh_token === '' &&
     (prevRefreshToken === '' || !prevRefreshToken)
   ) {
-    window.location.href = 'http://localhost:8888';
+    window.location.href = PORT;
   }
   localStorage.setItem('accessToken', tokens.access_token || prevAccessToken);
   localStorage.setItem(

@@ -13,9 +13,11 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
+const PORT = process.env.PORT || 8888;
+
 var client_id = 'e7c7737134554370a9dda36ba738f97f'; // Your client id
 var client_secret = '891fe7fee3eb4b08b28263277820af70'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var redirect_uri = `${PORT}/callback`; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -181,6 +183,5 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-const PORT = process.env.PORT || 8888;
 console.log(`Listening on ${PORT}`);
 app.listen(PORT);
