@@ -17,7 +17,11 @@ const PORT = process.env.PORT || 8888;
 
 var client_id = 'e7c7737134554370a9dda36ba738f97f'; // Your client id
 var client_secret = '891fe7fee3eb4b08b28263277820af70'; // Your secret
-var redirect_uri = `${PORT}/callback`; // Your redirect uri
+var redirect_uri =
+  process.env.NODE_ENV === 'production'
+    ? `https://spotify-moodboard.herokuapp.com/callback`
+    : `http://localhost:${PORT}/callback`; // Your redirect uri
+console.log('redirect url', redirect_uri);
 
 /**
  * Generates a random string containing numbers and letters
@@ -41,6 +45,7 @@ var app = express();
 
 app
   .use(express.static(__dirname + '/public'))
+  .use('/client', express.static(__dirname + '/client/build'))
   .use(cors())
   .use(cookieParser());
 
@@ -129,7 +134,11 @@ app.get('/callback', function (req, res) {
 
         // we can also pass the token to the browser to make requests from there
 
-        res.redirect('http://localhost:3000/');
+        const clientUrl =
+          process.env.NODE_ENV === 'production'
+            ? 'https://spotify-moodboard.herokuapp.com/client/index.html'
+            : 'http://localhost:3000';
+        res.redirect(clientUrl);
       } else {
         res.redirect(
           '/#' +
@@ -178,10 +187,6 @@ app.get('/refresh_token', function (req, res) {
     }
   });
 });
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-}
 
 console.log(`Listening on ${PORT}`);
 app.listen(PORT);
