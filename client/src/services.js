@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || '5000';
 const clientUrl =
   process.env.NODE_ENV === 'production'
-    ? 'https://spotify-moodboard.herokuapp.com/'
+    ? 'https://spotify-moodboard.herokuapp.com'
     : `http://localhost:${PORT}`;
 getTokens();
 
