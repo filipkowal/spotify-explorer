@@ -45,8 +45,8 @@ var stateKey = 'spotify_auth_state';
 var app = express();
 
 app
-  .use(express.static(__dirname + '/public'))
-  .use('/front', express.static(path.join(__dirname, '../client/build')))
+  .use('/authorization', express.static(__dirname + '/public'))
+  .use(express.static(path.join(__dirname, '../client/build')))
   .use(cors())
   .use(cookieParser());
 console.log(path.join(__dirname, '../client/build'));
@@ -117,24 +117,9 @@ app.get('/callback', function (req, res) {
 
         // use the access token to access the Spotify Web API
         let user = {};
-        request.get(options, function (error, response, body) {
-          console.log(body);
+        request.get(options, function (_error, _response, body) {
           user = body;
         });
-
-        // var options = {
-        //   url: 'https://api.spotify.com/v1/me/tracks',
-        //   headers: { Authorization: 'Bearer ' + access_token },
-        //   json: true,
-        // };
-
-        // let tracks = [];
-        // request.get(options, function (error, response, body) {
-        //   console.log(body);
-        //   tracks = body;
-        // });
-
-        // we can also pass the token to the browser to make requests from there
 
         const clientUrl =
           process.env.NODE_ENV === 'production'
@@ -145,7 +130,7 @@ app.get('/callback', function (req, res) {
         res.redirect(clientUrl);
       } else {
         res.redirect(
-          '/#' +
+          '/authorization/#' +
             querystring.stringify({
               error: 'invalid_token',
             })

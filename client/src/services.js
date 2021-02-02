@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || '8888';
+const PORT = process.env.PORT || '5000';
 const clientUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://spotify-moodboard.herokuapp.com/'
@@ -77,9 +77,11 @@ async function getTokens() {
   const prevRefreshToken = localStorage.getItem('refreshToken');
   if (
     tokens.refresh_token === '' &&
-    (prevRefreshToken === '' || !prevRefreshToken)
+    (prevRefreshToken === '' ||
+      !prevRefreshToken ||
+      prevRefreshToken === 'null')
   ) {
-    window.location.href = clientUrl;
+    window.location.href = `${clientUrl}/authorization`;
   }
   localStorage.setItem('accessToken', tokens.access_token || prevAccessToken);
   localStorage.setItem(

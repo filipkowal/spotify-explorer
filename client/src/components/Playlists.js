@@ -66,7 +66,7 @@ function Playlists({ loadedData, setLoadedData }) {
       <p>Seeds: {5 - seedTracks.length}</p>
       <p>Liked tracks</p>
       <ul>
-        {likedTracks.length
+        {likedTracks && likedTracks.length
           ? likedTracks.map(track => (
               <li key={track.track.id}>
                 <input
