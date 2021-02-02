@@ -25,10 +25,11 @@ async function getData(url) {
   };
 
   return fetch(url, options)
-    .then(response => {
+    .then(async function (response) {
       if (!response.ok) {
         if (response.status === 401 || response.error?.status === 401) {
-          refresh(() => getData(url));
+          await refresh();
+          return getData(url);
         }
         throw response;
       }
@@ -44,7 +45,7 @@ async function getData(url) {
     });
 }
 
-async function refresh(callback) {
+async function refresh() {
   await getTokens();
   console.log('refreshing token:' + localStorage.getItem('refreshToken'));
   fetch(
@@ -61,12 +62,12 @@ async function refresh(callback) {
       return response.json();
     })
     .then(data => {
-      console.log('Success:', data);
+      console.log('Refreshing token success:', data);
       localStorage.setItem('accessToken', data.access_token);
-      callback();
+      return data.access_token;
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Refreshing token error:', error);
     });
 }
 
