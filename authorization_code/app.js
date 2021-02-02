@@ -45,7 +45,7 @@ var app = express();
 
 app
   .use(express.static(__dirname + '/public'))
-  .use('/client', express.static(__dirname + '/client/build'))
+  .use('/front', express.static(__dirname + '/client/build'))
   .use(cors())
   .use(cookieParser());
 
@@ -136,7 +136,9 @@ app.get('/callback', function (req, res) {
 
         const clientUrl =
           process.env.NODE_ENV === 'production'
-            ? 'https://spotify-moodboard.herokuapp.com/client/index.html'
+            ? 'https://spotify-moodboard.herokuapp.com/front/index.html'
+            : process.env.LOCAL_HEROKU
+            ? 'http://localhost:5000'
             : 'http://localhost:3000';
         res.redirect(clientUrl);
       } else {
