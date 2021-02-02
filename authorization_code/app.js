@@ -12,6 +12,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var path = require('path');
 
 const PORT = process.env.PORT || 8888;
 
@@ -45,9 +46,10 @@ var app = express();
 
 app
   .use(express.static(__dirname + '/public'))
-  .use('/front', express.static(__dirname + '/client/build'))
+  .use('/front', express.static(path.join(__dirname, '../client/build')))
   .use(cors())
   .use(cookieParser());
+console.log(path.join(__dirname, '../client/build'));
 
 app.get('/login', function (req, res) {
   var state = generateRandomString(16);
