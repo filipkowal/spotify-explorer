@@ -49,7 +49,6 @@ app
   .use(express.static(path.join(__dirname, '../client/build')))
   .use(cors())
   .use(cookieParser());
-console.log(path.join(__dirname, '../client/build'));
 
 app.get('/login', function (req, res) {
   var state = generateRandomString(16);
@@ -123,7 +122,7 @@ app.get('/callback', function (req, res) {
 
         const clientUrl =
           process.env.NODE_ENV === 'production'
-            ? 'https://spotify-moodboard.herokuapp.com/front/index.html'
+            ? 'https://spotify-moodboard.herokuapp.com/index.html'
             : process.env.LOCAL_HEROKU
             ? 'http://localhost:5000'
             : 'http://localhost:3000';
