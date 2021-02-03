@@ -1,3 +1,15 @@
 :root {
   --secondary: #b3b3b3;
+  --body-padding: 0px;
+  --background-color: #181818;
+}
+@media (min-width: 750px) {
+  :root {
+    --body-padding: 10vw;
+  }
+}
+@media (min-width: 1100px) {
+  :root {
+    --body-padding: 20vw;
+  }
 }

@@ -8,14 +8,14 @@ function NextPrevButtons({
     <>
       {currentPlaylistIndex > 0 ? (
         <button className="previous-button" onClick={displayPreviousPlaylist}>
-          <div>previous</div>
+          previous
         </button>
       ) : (
         ''
       )}
       {currentPlaylistIndex + 1 < allPlaylists.length ? (
         <button className="next-button" onClick={displayNextPlaylist}>
-          <div>next</div>
+          next
         </button>
       ) : (
         ''

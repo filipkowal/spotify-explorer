@@ -9,11 +9,13 @@
 
 .previous-button {
   position: absolute;
-  left: 2.3em;
+  left: calc(var(--body-padding) + 43px);
+  border: 1px solid white;
 }
 .next-button {
   position: absolute;
-  right: 3em;
+  right: calc(var(--body-padding) + 43px);
+  outline: -webkit-focus-ring-color auto 1px;
 }
 
 .seeds .circle svg {
