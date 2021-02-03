@@ -36,7 +36,6 @@ async function getData(url) {
       return response.json();
     })
     .then(data => {
-      console.log('Success:', data);
       return data;
     })
     .catch(error => {
@@ -62,7 +61,6 @@ async function refresh() {
       return response.json();
     })
     .then(data => {
-      console.log('Refreshing token success:', data);
       localStorage.setItem('accessToken', data.access_token);
       return data.access_token;
     })

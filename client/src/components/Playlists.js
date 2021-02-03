@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import uniqueId from 'lodash.uniqueid';
 import '../styles/Playlists.css';
-import { mongodb, pin } from '../assets/icons';
+import { mongodb } from '../assets/icons';
 
 import { getLikedTracks, getRecommendedTracks } from '../services';
 import Playlist from './Playlist';
 
-function Playlists({ loadedData, setLoadedData }) {
+function Playlists({ setLoadedData }) {
   const [likedTracks, setLikedTracks] = useState([]);
   const [recommendedTracks, setRecommendedTracks] = useState([]);
   const [seedTracks, setSeedtracks] = useState([]);
   const [pinnedPlaylists, setPinnedPlaylists] = useState([]);
+  const [currentPlaylist, setCurrentPlaylist] = useState(null);
 
   useEffect(() => {
     setLoadedData(prevState => [...prevState, { likedTracks: false }]);
@@ -23,10 +24,22 @@ function Playlists({ loadedData, setLoadedData }) {
 
   useEffect(() => {
     if (seedTracks.length === 0) return;
-    getRecommendedTracks(seedTracks).then(r =>
-      setRecommendedTracks({ id: uniqueId(), tracks: r.tracks } || [])
-    );
+    getRecommendedTracks(seedTracks).then(r => {
+      const id = uniqueId();
+      setRecommendedTracks({ id: id, tracks: r.tracks } || []);
+      if (!currentPlaylist) {
+        setCurrentPlaylist(id);
+      }
+    });
   }, [seedTracks]);
+
+  const [allPlaylists, setAllPlaylists] = useState([]);
+  useEffect(() => {
+    const playlists = pinnedPlaylists.some(p => p.id === recommendedTracks.id)
+      ? pinnedPlaylists
+      : [...pinnedPlaylists, recommendedTracks];
+    setAllPlaylists(playlists);
+  }, [pinnedPlaylists, recommendedTracks]);
 
   function toggleTracks(e) {
     if (seedTracks.length >= 5 && e.target.checked) return;
@@ -62,6 +75,9 @@ function Playlists({ loadedData, setLoadedData }) {
   function unPinPlaylist(id) {
     setPinnedPlaylists(pinnedPlaylists.filter(pinned => pinned.id !== id));
   }
+  function isPinned(id) {
+    return pinnedPlaylists.some(p => id === p.id);
+  }
 
   return (
     <div className="playlists">
@@ -85,40 +101,17 @@ function Playlists({ loadedData, setLoadedData }) {
           : 'Loading liked tracks...'}
       </ul>
       <h2>Recommended tracks</h2>
-      {pinnedPlaylists.length
-        ? pinnedPlaylists.map(pinnedPlaylist => (
-            <>
-              <button onClick={() => unPinPlaylist(pinnedPlaylist.id)}>
-                <div>{pin} Unpin</div>
-              </button>
-              <div key={pinnedPlaylist.id}>
-                <Playlist
-                  playlist={pinnedPlaylist}
-                  toggleTracks={toggleTracks}
-                  pinPlaylist={pinPlaylist}
-                  isChecked={isChecked}
-                />
-              </div>
-            </>
-          ))
-        : ''}
-      <>
-        {recommendedTracks.tracks?.length ? (
-          <>
-            <button onClick={() => pinPlaylist(recommendedTracks)}>
-              <div>{pin} Pin</div>
-            </button>
-            <Playlist
-              playlist={recommendedTracks}
-              toggleTracks={toggleTracks}
-              pinPlaylist={pinPlaylist}
-              isChecked={isChecked}
-            />
-          </>
-        ) : (
-          'Select up to 5 tracks as seeds for recommendations.'
-        )}
-      </>
+      {allPlaylists.map(playlist => (
+        <Playlist
+          key={playlist.id}
+          playlist={playlist}
+          toggleTracks={toggleTracks}
+          pinPlaylist={pinPlaylist}
+          unPinPlaylist={unPinPlaylist}
+          isChecked={isChecked}
+          isPinned={isPinned}
+        />
+      ))}
     </div>
   );
 }

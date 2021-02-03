@@ -37,3 +37,17 @@ export const pin = (
     ></path>
   </svg>
 );
+export const pinSolid = (
+  <svg
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="15"
+    height="15"
+  >
+    <path
+      d="M7.5 0A4.5 4.5 0 007 8.973V15h1V8.973A4.5 4.5 0 007.5 0z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
