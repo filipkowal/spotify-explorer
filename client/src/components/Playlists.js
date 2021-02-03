@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import uniqueId from 'lodash.uniqueid';
+import '../styles/Playlists.css';
+import { mongodb, pin } from '../assets/icons';
 
 import { getLikedTracks, getRecommendedTracks } from '../services';
 import Playlist from './Playlist';
@@ -62,9 +64,11 @@ function Playlists({ loadedData, setLoadedData }) {
   }
 
   return (
-    <>
-      <p>Seeds: {5 - seedTracks.length}</p>
-      <p>Liked tracks</p>
+    <div className="playlists">
+      <p className="secondary">
+        {mongodb}Seeds: {5 - seedTracks.length}
+      </p>
+      <h2>Liked tracks</h2>
       <ul>
         {likedTracks && likedTracks.length
           ? likedTracks.map(track => (
@@ -80,26 +84,30 @@ function Playlists({ loadedData, setLoadedData }) {
             ))
           : 'Loading liked tracks...'}
       </ul>
-      <p>Recommended tracks</p>
+      <h2>Recommended tracks</h2>
       {pinnedPlaylists.length
         ? pinnedPlaylists.map(pinnedPlaylist => (
-            <ul key={pinnedPlaylist.id}>
+            <>
               <button onClick={() => unPinPlaylist(pinnedPlaylist.id)}>
-                Unpin
+                <div>{pin} Unpin</div>
               </button>
-              <Playlist
-                playlist={pinnedPlaylist}
-                toggleTracks={toggleTracks}
-                pinPlaylist={pinPlaylist}
-                isChecked={isChecked}
-              />
-            </ul>
+              <div key={pinnedPlaylist.id}>
+                <Playlist
+                  playlist={pinnedPlaylist}
+                  toggleTracks={toggleTracks}
+                  pinPlaylist={pinPlaylist}
+                  isChecked={isChecked}
+                />
+              </div>
+            </>
           ))
         : ''}
-      <ul>
+      <>
         {recommendedTracks.tracks?.length ? (
           <>
-            <button onClick={() => pinPlaylist(recommendedTracks)}>Pin</button>
+            <button onClick={() => pinPlaylist(recommendedTracks)}>
+              <div>{pin} Pin</div>
+            </button>
             <Playlist
               playlist={recommendedTracks}
               toggleTracks={toggleTracks}
@@ -110,8 +118,8 @@ function Playlists({ loadedData, setLoadedData }) {
         ) : (
           'Select up to 5 tracks as seeds for recommendations.'
         )}
-      </ul>
-    </>
+      </>
+    </div>
   );
 }
 

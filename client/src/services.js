@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || '5000';
+const PORT = process.env.PORT || process.env.LOCAL_HEROKU ? '5000' : '8888';
 const clientUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://spotify-moodboard.herokuapp.com'

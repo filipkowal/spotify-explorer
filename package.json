@@ -12,7 +12,8 @@
     "cors": "^2.8.4",
     "express": "~4.16.0",
     "querystring": "~0.2.0",
-    "request": "~2.83.0"
+    "request": "~2.83.0",
+    "teenyicons": "^0.4.0"
   },
   "scripts": {
     "start": "node authorization_code/app.js",

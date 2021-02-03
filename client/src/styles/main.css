@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'ProductSans-Black';
+  src: url('../assets/fonts/ProductSans-Black.ttf');
+}
+@font-face {
+  font-family: 'ProductSans-Regular';
+  src: url('../assets/fonts/ProductSans-Regular.ttf');
+}
+body {
+  background-color: #181818;
+  color: white;
+  font-family: 'ProductSans-Regular';
+}
+.secondary {
+  color: #b3b3b3;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'ProductSans-Black';
+}
+
+button {
+  background: none;
+  color: white;
+  border: none;
+}
+button :hover {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+button > div {
+  padding: 0.5em;
+}
+button * :hover {
+  outline: none;
+}
+
+.user {
+  text-align: right;
+  margin: 1em;
+}

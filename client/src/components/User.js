@@ -11,6 +11,6 @@ function User({ setLoadedData }) {
       .then(r => setUser(r) || {})
       .then(() => setLoadedData(prevState => [...prevState, { user: true }]));
   }, []);
-  return <p>{user.display_name}</p>;
+  return <p className="user secondary">{user.display_name}</p>;
 }
 export default User;

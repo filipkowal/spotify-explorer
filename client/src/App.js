@@ -1,5 +1,6 @@
 import './App.css';
 import { useState } from 'react';
+import './styles/main.css';
 
 import User from './components/User';
 import Playlists from './components/Playlists';
