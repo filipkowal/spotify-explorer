@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import uniqueId from 'lodash.uniqueid';
 import '../styles/Playlists.css';
-import { mongodb } from '../assets/icons';
 
 import { getLikedTracks, getRecommendedTracks } from '../services';
 import Playlist from './Playlist';
+import NextPrevButtons from './NextPrevButtons';
+import Seeds from './Seeds';
 
 function Playlists({ setLoadedData }) {
   const [likedTracks, setLikedTracks] = useState([]);
   const [recommendedTracks, setRecommendedTracks] = useState([]);
   const [seedTracks, setSeedtracks] = useState([]);
   const [pinnedPlaylists, setPinnedPlaylists] = useState([]);
-  const [currentPlaylist, setCurrentPlaylist] = useState(null);
+  const [currentPlaylist, setCurrentPlaylist] = useState([]);
 
   useEffect(() => {
     setLoadedData(prevState => [...prevState, { likedTracks: false }]);
@@ -27,9 +28,6 @@ function Playlists({ setLoadedData }) {
     getRecommendedTracks(seedTracks).then(r => {
       const id = uniqueId();
       setRecommendedTracks({ id: id, tracks: r.tracks } || []);
-      if (!currentPlaylist) {
-        setCurrentPlaylist(id);
-      }
     });
   }, [seedTracks]);
 
@@ -39,6 +37,7 @@ function Playlists({ setLoadedData }) {
       ? pinnedPlaylists
       : [...pinnedPlaylists, recommendedTracks];
     setAllPlaylists(playlists);
+    setCurrentPlaylist(playlists[playlists.length - 1]);
   }, [pinnedPlaylists, recommendedTracks]);
 
   function toggleTracks(e) {
@@ -78,12 +77,19 @@ function Playlists({ setLoadedData }) {
   function isPinned(id) {
     return pinnedPlaylists.some(p => id === p.id);
   }
+  const currentPlaylistIndex = allPlaylists.indexOf(currentPlaylist);
+  function displayNextPlaylist() {
+    if (currentPlaylistIndex + 1 === allPlaylists.length) return;
+    setCurrentPlaylist(allPlaylists[currentPlaylistIndex + 1]);
+  }
+  function displayPreviousPlaylist() {
+    if (currentPlaylistIndex <= 0) return;
+    setCurrentPlaylist(allPlaylists[currentPlaylistIndex - 1]);
+  }
 
   return (
     <div className="playlists">
-      <p className="secondary">
-        {mongodb}Seeds: {5 - seedTracks.length}
-      </p>
+      <Seeds seedTracks={seedTracks}></Seeds>
       <h2>Liked tracks</h2>
       <ul>
         {likedTracks && likedTracks.length
@@ -98,20 +104,24 @@ function Playlists({ setLoadedData }) {
                 {track.track.artists[0].name} - {track.track.name}
               </li>
             ))
-          : 'Loading liked tracks...'}
+          : 'Your liked tracks from Spotify will appear here.'}
       </ul>
       <h2>Recommended tracks</h2>
-      {allPlaylists.map(playlist => (
-        <Playlist
-          key={playlist.id}
-          playlist={playlist}
-          toggleTracks={toggleTracks}
-          pinPlaylist={pinPlaylist}
-          unPinPlaylist={unPinPlaylist}
-          isChecked={isChecked}
-          isPinned={isPinned}
-        />
-      ))}
+      <NextPrevButtons
+        currentPlaylistIndex={currentPlaylistIndex}
+        allPlaylists={allPlaylists}
+        displayPreviousPlaylist={displayPreviousPlaylist}
+        displayNextPlaylist={displayNextPlaylist}
+      />
+      <Playlist
+        key={currentPlaylist.id}
+        playlist={currentPlaylist}
+        toggleTracks={toggleTracks}
+        pinPlaylist={pinPlaylist}
+        unPinPlaylist={unPinPlaylist}
+        isChecked={isChecked}
+        isPinned={isPinned}
+      />
     </div>
   );
 }

@@ -23,6 +23,20 @@ export const circle = (
     <path d="M.5 7.5a7 7 0 1014 0 7 7 0 00-14 0z" stroke="currentColor"></path>
   </svg>
 );
+export const circleSolid = (
+  <svg
+    viewBox="0 0 15 15"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="15"
+    height="15"
+  >
+    <path
+      d="M7.5 0a7.5 7.5 0 100 15 7.5 7.5 0 000-15z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
 export const pin = (
   <svg
     viewBox="0 0 15 15"

@@ -1,5 +1,3 @@
-@import './variables.css';
-
 .playlists ul {
   list-style: none;
   text-align: left;
@@ -7,4 +5,19 @@
 }
 .playlists ul :nth-child(even) {
   color: var(--secondary);
+}
+
+.previous-button {
+  position: absolute;
+  left: 2.3em;
+}
+.next-button {
+  position: absolute;
+  right: 3em;
+}
+
+.seeds .circle svg {
+  margin: 0px 1px;
+  font-size: 0.7em;
+  width: 10px;
 }
