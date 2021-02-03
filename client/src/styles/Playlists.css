@@ -1,7 +1,13 @@
+.playlists {
+  margin-bottom: 10vw;
+}
 .playlists ul {
   list-style: none;
   text-align: left;
   line-height: 1.5em;
+  margin-top: 2em;
+  padding-left: var(--playlist-padding);
+  padding-right: var(--playlist-padding);
 }
 .playlists ul :nth-child(even) {
   color: var(--secondary);
@@ -9,12 +15,12 @@
 
 .previous-button {
   position: absolute;
-  left: calc(var(--body-padding) + 43px);
+  left: calc(var(--body-padding) + var(--playlist-padding));
   border: 1px solid white;
 }
 .next-button {
   position: absolute;
-  right: calc(var(--body-padding) + 43px);
+  right: calc(var(--body-padding) + var(--playlist-padding));
   outline: -webkit-focus-ring-color auto 1px;
 }
 
