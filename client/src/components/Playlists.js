@@ -89,9 +89,10 @@ function Playlists({ setLoadedData }) {
 
   return (
     <div className="playlists">
-      <Seeds seedTracks={seedTracks}></Seeds>
+      <p className="">Select up to 5 tracks to get recommendations.</p>
       <h2>Liked tracks</h2>
       <ul>
+        <Seeds seedTracks={seedTracks}></Seeds>
         {likedTracks && likedTracks.length
           ? likedTracks.map(track => (
               <li key={track.track.id}>

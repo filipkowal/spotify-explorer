@@ -42,7 +42,7 @@ function Playlist({
           </ul>
         </>
       ) : (
-        'Select up to 5 tracks as seeds for recommendations.'
+        <p className="secondary">The results will go here.</p>
       )}
     </div>
   );

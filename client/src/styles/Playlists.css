@@ -9,7 +9,7 @@
   padding-left: var(--playlist-padding);
   padding-right: var(--playlist-padding);
 }
-.playlists ul :nth-child(even) {
+.playlists ul > :nth-child(even) {
   color: var(--secondary);
 }
 
