@@ -18,7 +18,7 @@
   "scripts": {
     "start": "node authorization_code/app.js",
     "client": "cd client && npm start",
-    "dev": "concurrently -n 'server,client' -c 'red,green' \"nodemon authorization_code/app.js\" \"npm run client\"",
+    "dev": "concurrently -n 'server,client' -c 'blue,green' \"nodemon authorization_code/app.js\" \"npm run client\"",
     "install-client": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run install-client && npm run build"

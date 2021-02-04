@@ -70,18 +70,25 @@ async function refresh() {
 }
 
 async function getTokens() {
-  const response = await fetch(`${clientUrl}/tokens`);
-  const tokens = await response.json();
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const tokens = {
+    refresh_token: urlParams.get('refresh_token'),
+    access_token: urlParams.get('access_token'),
+  };
   const prevAccessToken = localStorage.getItem('accessToken');
   const prevRefreshToken = localStorage.getItem('refreshToken');
+
   if (
-    tokens.refresh_token === '' &&
+    (tokens.refresh_token === '' || !tokens.refresh_token) &&
     (prevRefreshToken === '' ||
       !prevRefreshToken ||
       prevRefreshToken === 'null')
   ) {
     window.location.href = `${clientUrl}/authorization`;
+    return;
   }
+
   localStorage.setItem('accessToken', tokens.access_token || prevAccessToken);
   localStorage.setItem(
     'refreshToken',
