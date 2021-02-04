@@ -1,8 +1,8 @@
-const PORT = process.env.PORT || process.env.LOCAL_HEROKU ? '5000' : '8888';
-const clientUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://spotify-moodboard.herokuapp.com'
-    : `http://localhost:${PORT}`;
+const serverUrl = process.env.ON_HEROKU
+  ? 'https://spotify-moodboard.herokuapp.com'
+  : process.env.LOCAL_HEROKU || process.env.NODE_ENV === 'production'
+  ? 'http://localhost:5000'
+  : 'http://localhost:8888';
 getTokens();
 
 function getUser() {
@@ -48,7 +48,7 @@ async function refresh() {
   await getTokens();
   console.log('refreshing token:' + localStorage.getItem('refreshToken'));
   fetch(
-    `${clientUrl}/refresh_token?refresh_token=` +
+    `${serverUrl}/refresh_token?refresh_token=` +
       localStorage.getItem('refreshToken')
   )
     .then(response => {
@@ -85,7 +85,7 @@ async function getTokens() {
       !prevRefreshToken ||
       prevRefreshToken === 'null')
   ) {
-    window.location.href = `${clientUrl}/authorization`;
+    window.location.href = `${serverUrl}/authorization`;
     return;
   }
 
