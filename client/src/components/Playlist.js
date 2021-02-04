@@ -25,6 +25,7 @@ function Playlist({
             {playlist.tracks?.map(track => (
               <li key={track.id} name={track.id}>
                 <input
+                  id={track.id}
                   type="checkbox"
                   checked={isChecked(track.id)}
                   name={track.id}
@@ -33,7 +34,9 @@ function Playlist({
                     pinPlaylist(playlist);
                   }}
                 />
-                {track.artists[0].name} - {track.name}
+                <label for={track.id}>
+                  {track.artists[0].name} - {track.name}
+                </label>
               </li>
             ))}
           </ul>

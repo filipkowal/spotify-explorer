@@ -96,12 +96,15 @@ function Playlists({ setLoadedData }) {
           ? likedTracks.map(track => (
               <li key={track.track.id}>
                 <input
+                  id={track.track.id}
                   type="checkbox"
                   checked={isChecked(track.track.id)}
                   name={track.track.id}
                   onChange={toggleTracks}
                 />
-                {track.track.artists[0].name} - {track.track.name}
+                <label for={track.track.id}>
+                  {track.track.artists[0].name} - {track.track.name}
+                </label>
               </li>
             ))
           : 'Your liked tracks from Spotify will appear here.'}
