@@ -1,12 +1,7 @@
-// const serverUrl = process.env.ON_HEROKU
-//   ? 'https://spotify-moodboard.herokuapp.com'
-//   : process.env.LOCAL_HEROKU || process.env.NODE_ENV === 'production'
-//   ? 'http://localhost:5000'
-//   : 'http://localhost:8888';
 const serverUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:8888'
-    : process.env.LOCAL_HEROKU
+    : process.env.REACT_APP_HEROKU
     ? 'http://localhost:5000'
     : 'https://spotify-moodboard.herokuapp.com';
 getTokens();

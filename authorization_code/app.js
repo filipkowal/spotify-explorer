@@ -17,7 +17,9 @@ const hostname = process.env.ON_HEROKU
   ? `https://spotify-moodboard.herokuapp.com`
   : `http://localhost:${PORT}`;
 const redirect_uri = hostname + '/callback';
-console.log('redirect url', redirect_uri);
+console.log('hostname', hostname);
+console.log('ON_HEROKU', process.env.ON_HEROKU);
+console.log('LOCAL_HEROKU', process.env.LOCAL_HEROKU);
 
 var stateKey = 'spotify_auth_state';
 var app = express();
@@ -92,11 +94,13 @@ app.get('/callback', function (req, res) {
           : process.env.ON_HEROKU
           ? 'https://spotify-moodboard.herokuapp.com'
           : 'http://localhost:3000';
+        console.log('clientUrl', clientUrl);
 
         res.redirect(clientUrl + '?' + tokensQuery);
       } else {
         res.redirect(
-          '/authorization/#' +
+          hostname +
+            '/authorization/#' +
             querystring.stringify({
               error: 'invalid_token',
             })
