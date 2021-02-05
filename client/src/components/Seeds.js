@@ -16,7 +16,7 @@ function Seeds({ seedTracks }) {
   }, [seedTracks]);
   return (
     <p className="seeds secondary">
-      Seeds:{' '}
+      Seed tracks:{' '}
       {circles.map((c, i) => (
         <span className="circle" key={i}>
           {c}

@@ -21,6 +21,9 @@ body {
 .secondary {
   color: var(--secondary);
 }
+.info {
+  color: #1cd85e;
+}
 h1,
 h2,
 h3,

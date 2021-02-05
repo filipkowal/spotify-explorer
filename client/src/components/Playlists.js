@@ -89,8 +89,8 @@ function Playlists({ setLoadedData }) {
 
   return (
     <div className="playlists">
-      <p className="">Select up to 5 tracks to get recommendations.</p>
       <h2>Liked tracks</h2>
+      <p className="info">1. Select up to 5 tracks to get recommendations.</p>
       <ul>
         <Seeds seedTracks={seedTracks}></Seeds>
         {likedTracks && likedTracks.length
@@ -111,21 +111,26 @@ function Playlists({ setLoadedData }) {
           : 'Your liked tracks from Spotify will appear here.'}
       </ul>
       <h2>Recommended tracks</h2>
-      <NextPrevButtons
+      <p className="info">
+        2. Select some tracks here to get more recommendations.
+      </p>
+      {/* <NextPrevButtons
         currentPlaylistIndex={currentPlaylistIndex}
         allPlaylists={allPlaylists}
         displayPreviousPlaylist={displayPreviousPlaylist}
         displayNextPlaylist={displayNextPlaylist}
-      />
-      <Playlist
-        key={currentPlaylist.id}
-        playlist={currentPlaylist}
-        toggleTracks={toggleTracks}
-        pinPlaylist={pinPlaylist}
-        unPinPlaylist={unPinPlaylist}
-        isChecked={isChecked}
-        isPinned={isPinned}
-      />
+      /> */}
+      {allPlaylists.map(playlist => (
+        <Playlist
+          key={playlist.id}
+          playlist={playlist}
+          toggleTracks={toggleTracks}
+          pinPlaylist={pinPlaylist}
+          unPinPlaylist={unPinPlaylist}
+          isChecked={isChecked}
+          isPinned={isPinned}
+        />
+      ))}
     </div>
   );
 }

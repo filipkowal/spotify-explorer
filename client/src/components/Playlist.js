@@ -12,7 +12,7 @@ function Playlist({
     <div key={playlist.id}>
       {playlist.tracks ? (
         <>
-          {isPinned(playlist.id) ? (
+          {/* {isPinned(playlist.id) ? (
             <button onClick={() => unPinPlaylist(playlist.id)}>
               <div>{pinSolid} Unpin</div>
             </button>
@@ -20,7 +20,7 @@ function Playlist({
             <button onClick={() => pinPlaylist(playlist)}>
               <div>{pin} Pin</div>
             </button>
-          )}
+          )} */}
           <ul>
             {playlist.tracks?.map(track => (
               <li key={track.id} name={track.id}>

@@ -12,6 +12,10 @@
 .playlists ul > :nth-child(even) {
   color: var(--secondary);
 }
+.playlists label,
+.playlists [type='checkbox'] {
+  cursor: pointer;
+}
 
 .previous-button {
   position: absolute;
