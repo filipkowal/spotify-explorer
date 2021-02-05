@@ -1,6 +1,7 @@
 .modal {
   position: fixed;
   left: 50%;
+  top: calc(50% - 2em);
   transform: translate(-50%, 0);
 }
 .modal > .container {
@@ -10,7 +11,7 @@
   padding: 0.5em 1em;
   background-color: var(--background-color);
 }
-.modal .x {
+.modal .info-icon {
   padding-right: 1em;
   padding-top: 0.3em;
   display: inline-block;

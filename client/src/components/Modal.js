@@ -1,12 +1,24 @@
-import { xLarge } from '../assets/icons';
+import { useState, useEffect } from 'react';
 
-function Modal({ text, isDisplayed }) {
+import { info } from '../assets/icons';
+
+function Modal({ text, toggle }) {
+  const [showModal, setShowModal] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
+  useEffect(() => {
+    if (!initialLoad) {
+      console.log('toggle Modal');
+      setShowModal(true);
+      setTimeout(() => setShowModal(false), 3000);
+    }
+    setInitialLoad(false);
+  }, [toggle]);
   return (
     <>
-      {isDisplayed ? (
+      {showModal ? (
         <div className="modal">
           <div className="container">
-            <span className="x">{xLarge}</span>{' '}
+            <span className="info-icon">{info}</span>
             <span className="text">{text}</span>
           </div>
         </div>

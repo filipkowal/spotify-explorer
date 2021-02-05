@@ -4,15 +4,15 @@ import '../styles/Playlists.css';
 
 import { getLikedTracks, getRecommendedTracks } from '../services';
 import Playlist from './Playlist';
-import NextPrevButtons from './NextPrevButtons';
 import Seeds from './Seeds';
+import Modal from './Modal';
 
 function Playlists({ setLoadedData }) {
   const [likedTracks, setLikedTracks] = useState([]);
   const [recommendedTracks, setRecommendedTracks] = useState([]);
   const [seedTracks, setSeedtracks] = useState([]);
   const [pinnedPlaylists, setPinnedPlaylists] = useState([]);
-  const [currentPlaylist, setCurrentPlaylist] = useState([]);
+  const [toggleOutOfSeeds, setDisplayOutOfSeeds] = useState(false);
 
   useEffect(() => {
     setLoadedData(prevState => [...prevState, { likedTracks: false }]);
@@ -37,11 +37,13 @@ function Playlists({ setLoadedData }) {
       ? pinnedPlaylists
       : [...pinnedPlaylists, recommendedTracks];
     setAllPlaylists(playlists);
-    setCurrentPlaylist(playlists[playlists.length - 1]);
   }, [pinnedPlaylists, recommendedTracks]);
 
   function toggleTracks(e) {
-    if (seedTracks.length >= 5 && e.target.checked) return;
+    if (seedTracks.length >= 5 && e.target.checked) {
+      setDisplayOutOfSeeds(prev => !prev);
+      return;
+    }
     if (seedTracks.some(track => track.id === e.target.name)) {
       setSeedtracks(seedTracks.filter(track => track.id !== e.target.name));
       return;
@@ -77,15 +79,6 @@ function Playlists({ setLoadedData }) {
   function isPinned(id) {
     return pinnedPlaylists.some(p => id === p.id);
   }
-  const currentPlaylistIndex = allPlaylists.indexOf(currentPlaylist);
-  function displayNextPlaylist() {
-    if (currentPlaylistIndex + 1 === allPlaylists.length) return;
-    setCurrentPlaylist(allPlaylists[currentPlaylistIndex + 1]);
-  }
-  function displayPreviousPlaylist() {
-    if (currentPlaylistIndex <= 0) return;
-    setCurrentPlaylist(allPlaylists[currentPlaylistIndex - 1]);
-  }
 
   return (
     <div className="playlists">
@@ -118,12 +111,6 @@ function Playlists({ setLoadedData }) {
       <p className="info">
         2. Select some tracks here to get more recommendations.
       </p>
-      {/* <NextPrevButtons
-        currentPlaylistIndex={currentPlaylistIndex}
-        allPlaylists={allPlaylists}
-        displayPreviousPlaylist={displayPreviousPlaylist}
-        displayNextPlaylist={displayNextPlaylist}
-      /> */}
       {allPlaylists.map(playlist => (
         <Playlist
           key={playlist.id}
@@ -135,6 +122,7 @@ function Playlists({ setLoadedData }) {
           isPinned={isPinned}
         />
       ))}
+      <Modal toggle={toggleOutOfSeeds} text="You've ran out of seed tracks." />
     </div>
   );
 }
