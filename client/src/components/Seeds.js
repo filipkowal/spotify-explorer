@@ -15,7 +15,7 @@ function Seeds({ seedTracks }) {
     setCircles(newCircles);
   }, [seedTracks]);
   return (
-    <p className="seeds secondary">
+    <p className="seeds">
       Seed tracks:{' '}
       {circles.map((c, i) => (
         <span className="circle" key={i}>

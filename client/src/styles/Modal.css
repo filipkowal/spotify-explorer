@@ -1,0 +1,21 @@
+.modal {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.modal > .container {
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 0.5em 1em;
+  background-color: var(--background-color);
+}
+.modal .x {
+  padding-right: 1em;
+  padding-top: 0.3em;
+  display: inline-block;
+}
+.modal .text {
+  padding-bottom: 0.2em;
+  display: inline-block;
+}

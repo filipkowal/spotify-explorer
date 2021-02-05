@@ -93,22 +93,26 @@ function Playlists({ setLoadedData }) {
       <p className="info">1. Select up to 5 tracks to get recommendations.</p>
       <ul>
         <Seeds seedTracks={seedTracks}></Seeds>
-        {likedTracks && likedTracks.length
-          ? likedTracks.map(track => (
-              <li key={track.track.id}>
-                <input
-                  id={track.track.id}
-                  type="checkbox"
-                  checked={isChecked(track.track.id)}
-                  name={track.track.id}
-                  onChange={toggleTracks}
-                />
-                <label for={track.track.id}>
-                  {track.track.artists[0].name} - {track.track.name}
-                </label>
-              </li>
-            ))
-          : 'Your liked tracks from Spotify will appear here.'}
+        {likedTracks && likedTracks.length ? (
+          likedTracks.map(track => (
+            <li key={track.track.id}>
+              <input
+                id={track.track.id}
+                type="checkbox"
+                checked={isChecked(track.track.id)}
+                name={track.track.id}
+                onChange={toggleTracks}
+              />
+              <label for={track.track.id}>
+                {track.track.artists[0].name} - {track.track.name}
+              </label>
+            </li>
+          ))
+        ) : (
+          <p className="secondary">
+            Your liked tracks from Spotify will appear here.
+          </p>
+        )}
       </ul>
       <h2>Recommended tracks</h2>
       <p className="info">
