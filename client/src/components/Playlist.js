@@ -1,5 +1,4 @@
-import { pin, pinSolid } from '../assets/icons';
-import { likeTrack } from '../services';
+import LikeButton from './LikeButton';
 
 function Playlist({ playlist, toggleTracks, pinPlaylist, isChecked }) {
   return (
@@ -18,10 +17,10 @@ function Playlist({ playlist, toggleTracks, pinPlaylist, isChecked }) {
                   pinPlaylist(playlist);
                 }}
               />
-              <button onClick={() => likeTrack(track.id)}>Like</button>
               <label for={track.id}>
                 {track.artists[0].name} - {track.name}
               </label>
+              <LikeButton id={track.id} />
             </li>
           ))}
         </ul>

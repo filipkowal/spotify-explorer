@@ -24,11 +24,23 @@ function likeTrack(id) {
     `https://api.spotify.com/v1/me/tracks?access_token=${token}&ids=` + id;
   return fetch(url, {
     method: 'PUT',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ access_token: token }),
   });
+}
+function dislikeTrack(id) {
+  const token = localStorage.getItem('accessToken');
+  const url =
+    `https://api.spotify.com/v1/me/tracks?access_token=${token}&ids=` + id;
+  return fetch(url, {
+    method: 'DELETE',
+  });
+}
+async function checkLikedTrack(id) {
+  const token = localStorage.getItem('accessToken');
+  const url =
+    `https://api.spotify.com/v1/me/tracks/contains?access_token=${token}&ids=` +
+    id;
+  const isLiked = await fetch(url).then(r => r.json());
+  return isLiked;
 }
 
 async function logout() {
@@ -121,4 +133,6 @@ export {
   getTokens,
   logout,
   likeTrack,
+  dislikeTrack,
+  checkLikedTrack,
 };
