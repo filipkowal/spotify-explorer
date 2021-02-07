@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getUser } from '../services';
+import { getUser, logout } from '../services';
 
 function User({ setLoadedData }) {
   const [user, setUser] = useState({});
@@ -11,6 +11,12 @@ function User({ setLoadedData }) {
       .then(r => setUser(r) || {})
       .then(() => setLoadedData(prevState => [...prevState, { user: true }]));
   }, []);
-  return <p className="user secondary">{user.display_name}</p>;
+
+  return (
+    <p className="user secondary">
+      <span className="username">{user.display_name}</span>{' '}
+      <button onClick={logout}>Logout</button>
+    </p>
+  );
 }
 export default User;

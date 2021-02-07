@@ -36,9 +36,10 @@ h6 {
 button {
   background: none;
   color: white;
-  border: none;
+  border: 1px solid white;
   padding: 0.5em 1em;
   border-radius: 2px;
+  font-family: ProductSans-Regular;
 }
 button:hover {
   color: var(--background-color);

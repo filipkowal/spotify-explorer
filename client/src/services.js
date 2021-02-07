@@ -18,6 +18,10 @@ function getRecommendedTracks(seeds) {
     seeds.reduce((p, c, i) => (i === 0 ? c.id : p + ',' + c.id), '');
   return getData(uri);
 }
+async function logout() {
+  await localStorage.clear();
+  window.location.href = `${serverUrl}/login?logout=true`;
+}
 
 async function getData(url) {
   const options = {
@@ -97,4 +101,4 @@ async function getTokens() {
   );
 }
 
-export { getUser, getLikedTracks, getRecommendedTracks, getTokens };
+export { getUser, getLikedTracks, getRecommendedTracks, getTokens, logout };

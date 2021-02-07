@@ -9,18 +9,10 @@ const PORT = process.env.PORT || 8888;
 
 var client_id = 'e7c7737134554370a9dda36ba738f97f';
 var client_secret = '891fe7fee3eb4b08b28263277820af70';
-// var redirect_uri =
-//   process.env.NODE_ENV === 'production'
-//     ? `https://spotify-moodboard.herokuapp.com/callback`
-//     : `http://localhost:${PORT}/callback`;
 const hostname = process.env.ON_HEROKU
   ? `https://spotify-moodboard.herokuapp.com`
   : `http://localhost:${PORT}`;
 const redirect_uri = hostname + '/callback';
-console.log('hostname', hostname);
-console.log('ON_HEROKU', process.env.ON_HEROKU);
-console.log('LOCAL_HEROKU', process.env.LOCAL_HEROKU);
-
 var stateKey = 'spotify_auth_state';
 var app = express();
 
@@ -31,6 +23,7 @@ app
   .use(cookieParser());
 
 app.get('/login', function (req, res) {
+  const logout = req.url.includes('logout');
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -44,6 +37,7 @@ app.get('/login', function (req, res) {
         scope: scope,
         redirect_uri: redirect_uri,
         state: state,
+        show_dialog: logout,
       })
   );
 });

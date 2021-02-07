@@ -33,3 +33,7 @@
   font-size: 0.7em;
   width: 10px;
 }
+
+.user .username {
+  padding-right: 1em;
+}
