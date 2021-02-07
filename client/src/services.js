@@ -18,6 +18,19 @@ function getRecommendedTracks(seeds) {
     seeds.reduce((p, c, i) => (i === 0 ? c.id : p + ',' + c.id), '');
   return getData(uri);
 }
+function likeTrack(id) {
+  const token = localStorage.getItem('accessToken');
+  const url =
+    `https://api.spotify.com/v1/me/tracks?access_token=${token}&ids=` + id;
+  return fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ access_token: token }),
+  });
+}
+
 async function logout() {
   await localStorage.clear();
   window.location.href = `${serverUrl}/login?logout=true`;
@@ -101,4 +114,11 @@ async function getTokens() {
   );
 }
 
-export { getUser, getLikedTracks, getRecommendedTracks, getTokens, logout };
+export {
+  getUser,
+  getLikedTracks,
+  getRecommendedTracks,
+  getTokens,
+  logout,
+  likeTrack,
+};

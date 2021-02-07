@@ -130,9 +130,7 @@ function Playlists({ setLoadedData }) {
               setShowToResults(playlist.id);
             }}
             pinPlaylist={pinPlaylist}
-            unPinPlaylist={unPinPlaylist}
             isChecked={isChecked}
-            isPinned={isPinned}
           />
           {showToResults === playlist.id ? <ToResults /> : ''}
         </div>
