@@ -7,8 +7,8 @@ var path = require('path');
 
 const PORT = process.env.PORT || 8888;
 
-var client_id = 'e7c7737134554370a9dda36ba738f97f';
-var client_secret = '891fe7fee3eb4b08b28263277820af70';
+var client_id = process.env.CLIENT_ID;
+var client_secret = process.env.CLIENT_SECRET;
 const hostname = process.env.ON_HEROKU
   ? `https://spotify-moodboard.herokuapp.com`
   : `http://localhost:${PORT}`;
