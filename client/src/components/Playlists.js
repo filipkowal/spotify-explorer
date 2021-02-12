@@ -18,6 +18,7 @@ function Playlists({ setLoadedData }) {
   const [pinnedPlaylists, setPinnedPlaylists] = useState([]);
   const [toggleOutOfSeeds, setDisplayOutOfSeeds] = useState(false);
   const [showToResults, setShowToResults] = useState(false);
+  const [allPlaylists, setAllPlaylists] = useState([]);
 
   useEffect(() => {
     setLoadedData(prevState => [...prevState, { likedTracks: false }]);
@@ -26,7 +27,7 @@ function Playlists({ setLoadedData }) {
       .then(() => {
         setLoadedData(prevState => [...prevState, { likedTracks: true }]);
       });
-  }, []);
+  }, [setLoadedData]);
 
   useEffect(() => {
     if (seedTracks.length === 0) return;
@@ -36,7 +37,6 @@ function Playlists({ setLoadedData }) {
     });
   }, [seedTracks]);
 
-  const [allPlaylists, setAllPlaylists] = useState([]);
   useEffect(() => {
     const playlists = pinnedPlaylists.some(p => p.id === recommendedTracks.id)
       ? pinnedPlaylists
@@ -79,12 +79,6 @@ function Playlists({ setLoadedData }) {
     if (pinnedPlaylists.some(pinned => pinned.id === playlist.id)) return;
     setPinnedPlaylists([...pinnedPlaylists, playlist]);
   }
-  function unPinPlaylist(id) {
-    setPinnedPlaylists(pinnedPlaylists.filter(pinned => pinned.id !== id));
-  }
-  function isPinned(id) {
-    return pinnedPlaylists.some(p => id === p.id);
-  }
 
   return (
     <div className="playlists">
@@ -106,7 +100,7 @@ function Playlists({ setLoadedData }) {
                     setShowToResults(likedTracks.id);
                   }}
                 />
-                <label for={track.track.id}>
+                <label htmlFor={track.track.id}>
                   {track.track.artists[0].name} - {track.track.name}
                 </label>
               </li>
@@ -124,9 +118,8 @@ function Playlists({ setLoadedData }) {
         2. Select some tracks here to get more recommendations.
       </p>
       {allPlaylists.map(playlist => (
-        <div className="playlist-container">
+        <div key={playlist.id} className="playlist-container">
           <Playlist
-            key={playlist.id}
             playlist={playlist}
             toggleTracks={e => {
               toggleTracks(e);

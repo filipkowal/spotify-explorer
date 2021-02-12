@@ -88,7 +88,6 @@ app.get('/callback', function (req, res) {
           : process.env.ON_HEROKU
           ? 'https://spotify-moodboard.herokuapp.com'
           : 'http://localhost:3000';
-        console.log('clientUrl', clientUrl);
 
         res.redirect(clientUrl + '?' + tokensQuery);
       } else {

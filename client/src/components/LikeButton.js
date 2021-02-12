@@ -11,7 +11,7 @@ function LikeButton({ id }) {
 
   useEffect(() => {
     checkLikedTrack(id).then(r => setLiked(r[0]));
-  }, []);
+  }, [id]);
 
   function toggleLike() {
     if (liked) {

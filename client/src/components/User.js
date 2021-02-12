@@ -10,7 +10,7 @@ function User({ setLoadedData }) {
     getUser()
       .then(r => setUser(r) || {})
       .then(() => setLoadedData(prevState => [...prevState, { user: true }]));
-  }, []);
+  }, [setLoadedData]);
 
   return (
     <p className="user secondary">
