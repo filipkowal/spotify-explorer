@@ -1,5 +1,5 @@
 {
-  "name": "music-tree-client",
+  "name": "spotify-explorer-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

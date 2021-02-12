@@ -1,8 +1,8 @@
 {
-  "author": "Spotify",
-  "name": "web-api-auth-examples",
-  "description": "Basic examples of the Spotify authorization flows through OAuth 2",
-  "version": "0.0.2",
+  "author": "filipkowal",
+  "name": "spotify-explorer",
+  "description": "Get to know recommendations based on your Spotify's liked tracks.",
+  "version": "0.0.1",
   "engines": {
     "node": "14.5.x"
   },
@@ -16,9 +16,9 @@
     "teenyicons": "^0.4.0"
   },
   "scripts": {
-    "start": "node authorization_code/app.js",
+    "start": "node server/app.js",
     "client": "cd client && npm start",
-    "dev": "concurrently -n 'server,client' -c 'blue,green' \"nodemon authorization_code/app.js\" \"npm run client\"",
+    "dev": "concurrently -n 'server,client' -c 'blue,green' \"nodemon server/app.js\" \"npm run client\"",
     "install-client": "cd client && npm install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run install-client && npm run build",

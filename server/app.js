@@ -43,7 +43,7 @@ app.get('/login', function (req, res) {
 });
 
 app.get('/callback', function (req, res) {
-  // your application requests refresh and access tokens
+  // get refresh and access tokens
   // after checking the state parameter
 
   var code = req.query.code || null;
