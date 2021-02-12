@@ -4,9 +4,14 @@ const serverUrl =
     : process.env.REACT_APP_HEROKU
     ? 'http://localhost:5000'
     : 'https://spotify-moodboard.herokuapp.com';
+const getDataQue = [];
+
 getTokens();
 
 async function getData(url) {
+  if (getDataQue.includes(url)) return;
+  getDataQue.push(url);
+
   const options = {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
     json: true,
@@ -16,11 +21,14 @@ async function getData(url) {
     .then(async function (response) {
       if (!response.ok) {
         if (response.status === 401 || response.error?.status === 401) {
-          await refresh();
+          const refreshResult = await refresh();
+          if (!refreshResult.ok) throw refreshResult;
+          getDataQue.pop();
           return getData(url);
         }
         throw response;
       }
+      getDataQue.pop();
       return response.json();
     })
     .then(data => {
@@ -33,17 +41,13 @@ async function getData(url) {
 }
 
 async function refresh() {
-  await getTokens();
-  console.log('refreshing token:' + localStorage.getItem('refreshToken'));
-  fetch(
+  getTokens();
+  const result = await fetch(
     `${serverUrl}/refresh_token?refresh_token=` +
       localStorage.getItem('refreshToken')
   )
     .then(response => {
       if (!response.ok) {
-        if (response.status === 401 || response.error?.status === 401) {
-          console.log('Refreshing token failed.');
-        }
         throw response;
       }
       return response.json();
@@ -53,11 +57,13 @@ async function refresh() {
       return data.access_token;
     })
     .catch(error => {
-      console.error('Refreshing token error:', error);
+      return error;
     });
+
+  return result;
 }
 
-async function getTokens() {
+function getTokens() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const tokens = {

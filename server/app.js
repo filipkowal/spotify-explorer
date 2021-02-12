@@ -129,7 +129,9 @@ app.get('/refresh_token', function (req, res) {
         access_token: access_token,
       });
     } else {
-      res.send({ error, response });
+      res
+        .status(response.statusCode || error.statusCode)
+        .send(error || response);
     }
   });
 });
