@@ -1,5 +1,9 @@
 import { heart, heartSolid } from '../assets/icons';
-import { likeTrack, dislikeTrack, checkLikedTrack } from '../services';
+import {
+  likeTrack,
+  dislikeTrack,
+  checkLikedTrack,
+} from '../services/trackService';
 import { useState, useEffect } from 'react';
 
 function LikeButton({ id }) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getUser, logout } from '../services';
+import { getUser, logout } from '../services/userService';
 
 function User({ setLoadedData }) {
   const [user, setUser] = useState({});

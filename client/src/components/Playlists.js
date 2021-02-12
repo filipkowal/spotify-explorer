@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import uniqueId from 'lodash.uniqueid';
 import '../styles/Playlists.css';
 
-import { getLikedTracks, getRecommendedTracks } from '../services';
+import {
+  getLikedTracks,
+  getRecommendedTracks,
+} from '../services/playlistService';
 import Playlist from './Playlist';
 import Seeds from './Seeds';
 import Modal from './Modal';

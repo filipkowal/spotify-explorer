@@ -6,48 +6,6 @@ const serverUrl =
     : 'https://spotify-moodboard.herokuapp.com';
 getTokens();
 
-function getUser() {
-  return getData('https://api.spotify.com/v1/me');
-}
-function getLikedTracks() {
-  return getData('https://api.spotify.com/v1/me/tracks');
-}
-function getRecommendedTracks(seeds) {
-  const uri =
-    'https://api.spotify.com/v1/recommendations?seed_tracks=' +
-    seeds.reduce((p, c, i) => (i === 0 ? c.id : p + ',' + c.id), '');
-  return getData(uri);
-}
-function likeTrack(id) {
-  const token = localStorage.getItem('accessToken');
-  const url =
-    `https://api.spotify.com/v1/me/tracks?access_token=${token}&ids=` + id;
-  return fetch(url, {
-    method: 'PUT',
-  });
-}
-function dislikeTrack(id) {
-  const token = localStorage.getItem('accessToken');
-  const url =
-    `https://api.spotify.com/v1/me/tracks?access_token=${token}&ids=` + id;
-  return fetch(url, {
-    method: 'DELETE',
-  });
-}
-async function checkLikedTrack(id) {
-  const token = localStorage.getItem('accessToken');
-  const url =
-    `https://api.spotify.com/v1/me/tracks/contains?access_token=${token}&ids=` +
-    id;
-  const isLiked = await fetch(url).then(r => r.json());
-  return isLiked;
-}
-
-async function logout() {
-  await localStorage.clear();
-  window.location.href = `${serverUrl}/login?logout=true`;
-}
-
 async function getData(url) {
   const options = {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
@@ -126,13 +84,4 @@ async function getTokens() {
   );
 }
 
-export {
-  getUser,
-  getLikedTracks,
-  getRecommendedTracks,
-  getTokens,
-  logout,
-  likeTrack,
-  dislikeTrack,
-  checkLikedTrack,
-};
+export { getData, serverUrl };
